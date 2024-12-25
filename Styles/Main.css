@@ -1,0 +1,84 @@
+body {
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-color: #212121;
+    margin: 0px;
+    padding: 0px;
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Field {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 20px;
+}
+
+.Cell {
+    height: 100px;
+    width: 100px;
+    background-color: rgb(42, 42, 42);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    border: 2px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Cell:hover {
+    box-shadow: 0 0 5px #000000, 0 0 10px #000000;
+    background-color: rgb(52, 52, 52);
+    cursor: pointer;
+}
+
+/* Icons */
+.Icon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.X {
+    transform: rotate(45deg);
+}
+
+.X::before,
+.X::after {
+    content: '';
+    position: absolute;
+    background-color: #00ffff;
+    box-shadow: 0 0 5px #00ffff, 0 0 5px #00ffff;
+    width: 10px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.X::before {
+    transform: rotate(90deg);
+    top: 0;
+    left: 25px;
+}
+
+.X::after {
+    transform: rotate(0deg);
+    top: 0;
+    left: 25px;
+}
+
+.O {
+    border: 8px solid #ff6f91;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 5px #ff6f91, 0 0 5px #ff6f91;
+}
