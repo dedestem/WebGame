@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // Check for winner or tie
         if (checkWinner()) {
-            endGame(`${currentPlayer} heeft gewonnen!`);
+            endGame(`${currentPlayer} heeft gewonnen!`, currentPlayer);
         } else if (checkTie()) {
-            endGame("Het is een gelijkspel!");
+            endGame("Het is een gelijkspel!", "none");
         }
     
         // Clear hover effects
@@ -62,11 +62,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return cells.every(cell => cell.querySelector(".Icon"));
     }
 
-    function endGame(message) {
-        alert(message);
+    function endGame(message, winner) {
         gameOver = true;
+        // Call the flash function with delay between each call for a more visible effect
+        setTimeout(() => flash(winner), 0); 
+        setTimeout(() => flash(winner), 200);    
+        setTimeout(() => flash(winner), 600);  
+        setTimeout(() => flash(winner), 1000);  
+        setTimeout(() => window.location.reload(), 10000);
     }
-
+    
+    function flash(winner) {
+        console.log(winner);
+        cells.forEach(cell => {
+            if (winner === "X") {
+                cell.style.boxShadow = "0 0 5px #00ffff, 0 0 10px #00ffff";  // Blue for X
+            } else if (winner === "O") {
+                cell.style.boxShadow = "0 0 5px #ff6f91, 0 0 10px #ff6f91";  // Pink for O
+            } else {
+                cell.style.boxShadow = "0 0 5px rgb(255, 255, 255), 0 0 10px rgb(255, 255, 255)";
+            }
+        });
+    
+        // Wait function
+        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    
+        // Clear the flash effect after some time
+        (async () => {
+            await wait(500); // Wait for 500ms before removing box shadow
+            cells.forEach(cell => {
+                cell.style.boxShadow = "";
+            });
+        })();
+    }    
+    
     // Dynamically add/remove hover effect based on current player
     function updateCellHoverStyle(cell, isHovering) {
         if (cell.querySelector(".Icon")) return; // No hover effect if the game is over or cell is filled
