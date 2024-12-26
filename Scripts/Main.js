@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPlayer = "X";
     let gameOver = false;
 
-    // Voeg een klikgebeurtenis toe aan elke cel
+    // Add a click event to each cell
     cells.forEach(cell => {
         cell.addEventListener("click", handleCellClick);
 
@@ -16,27 +16,38 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleCellClick(e) {
         // Prevent clicking on a cell that already has an icon or if the game is over
         if (e.target.classList.contains("Icon") || e.target.closest('.Cell').querySelector(".Icon")) return;
-    
+        if (gameOver) return;
+
         // Add the icon
         const icon = createIcon();
         e.target.appendChild(icon);
-    
+
         // Check for winner or tie
         if (checkWinner()) {
-            endGame(`${currentPlayer} heeft gewonnen!`, currentPlayer);
+            endGame(`${currentPlayer} has won!`, currentPlayer);
         } else if (checkTie()) {
-            endGame("Het is een gelijkspel!", "none");
+            endGame("It's a tie!", "none");
         }
-    
+
         // Clear hover effects
         cells.forEach(cell => {
             cell.style.boxShadow = "";
         });
-    
+
         // Switch player
         currentPlayer = currentPlayer === "X" ? "O" : "X";
+        if (currentPlayer === "X") {
+            SetFeedback("X Turn", "#00ffff");
+        } else {
+            SetFeedback("O Turn", "#ff6f91");
+        }
     }
-    
+
+    function SetFeedback(text, color) {
+        const element = document.getElementById("text");
+        element.style.color = color;
+        element.textContent = text;
+    }
 
     function createIcon() {
         const icon = document.createElement("div");
@@ -46,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkWinner() {
         const winningCombinations = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontaal
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticaal
-            [0, 4, 8], [2, 4, 6]             // Diagonaal
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertical
+            [0, 4, 8], [2, 4, 6]             // Diagonal
         ];
 
         return winningCombinations.some(combination => {
@@ -64,14 +75,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endGame(message, winner) {
         gameOver = true;
-        // Call the flash function with delay between each call for a more visible effect
-        setTimeout(() => flash(winner), 0); 
-        setTimeout(() => flash(winner), 200);    
-        setTimeout(() => flash(winner), 600);  
-        setTimeout(() => flash(winner), 1000);  
-        setTimeout(() => window.location.reload(), 10000);
+
+        setTimeout(() => {
+            if (winner === "X") {
+                SetFeedback(message, "#00ffff");
+            } else if (winner === "O") {
+                SetFeedback(message, "#ff6f91");
+            } else {
+                SetFeedback(message, "rgb(255, 255, 255)");
+            }
+        }, 500);
+
+        setTimeout(() => {
+            setTimeout(() => flash(winner), 0); 
+            setTimeout(() => flash(winner), 550);    
+            setTimeout(() => flash(winner), 1050);  
+            setTimeout(() => flash(winner), 2050);  
+            setTimeout(() => flash(winner), 2550); 
+            setTimeout(() => flash(winner), 3550);    
+            setTimeout(() => flash(winner), 4050);  
+            setTimeout(() => flash(winner), 5550);  
+            setTimeout(() => window.location.reload(), 8000);
+        }, 1000);
     }
-    
+
     function flash(winner) {
         console.log(winner);
         cells.forEach(cell => {
@@ -83,10 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.style.boxShadow = "0 0 5px rgb(255, 255, 255), 0 0 10px rgb(255, 255, 255)";
             }
         });
-    
+
         // Wait function
         const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-    
+
         // Clear the flash effect after some time
         (async () => {
             await wait(500); // Wait for 500ms before removing box shadow
@@ -94,10 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.style.boxShadow = "";
             });
         })();
-    }    
-    
+    }
+
     // Dynamically add/remove hover effect based on current player
     function updateCellHoverStyle(cell, isHovering) {
+        if (gameOver) return;
         if (cell.querySelector(".Icon")) return; // No hover effect if the game is over or cell is filled
 
         // Set box-shadow only on hover based on the current player
