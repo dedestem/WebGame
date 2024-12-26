@@ -3,6 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const cells = Array.from(field.getElementsByClassName("Cell"));
     let currentPlayer = "X";
     let gameOver = false;
+    const isBotEnabled = window.location.hash === "#Bot";
+
+    if (isBotEnabled) {
+        SetFeedback("Bot mode", "rgb(255, 255, 255)");
+    } else {
+        SetFeedback("Local mode", "rgb(255, 255, 255)");
+    }
+
+    window.addEventListener("hashchange", () => {
+        window.location.reload();
+    });
 
     // Add a click event to each cell
     cells.forEach(cell => {
@@ -14,13 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function handleCellClick(e) {
-        // Prevent clicking on a cell that already has an icon or if the game is over
-        if (e.target.classList.contains("Icon") || e.target.closest('.Cell').querySelector(".Icon")) return;
         if (gameOver) return;
+        if (currentPlayer === "O" && isBotEnabled) return; // Ignore clicks during bot's turn
 
+        // Prevent clicking on a cell that already has an icon
+        if (e.target.classList.contains("Icon") || e.target.closest('.Cell').querySelector(".Icon")) return;
+
+        makeMove(e.target);
+
+        // If bot is enabled and it's O's turn
+        if (isBotEnabled && currentPlayer === "O" && !gameOver) {
+            setTimeout(botMove, 500); // Add a small delay for realism
+        }
+    }
+
+    function makeMove(cell) {
         // Add the icon
         const icon = createIcon();
-        e.target.appendChild(icon);
+        cell.appendChild(icon);
 
         // Check for winner or tie
         if (checkWinner()) {
@@ -30,12 +52,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Clear hover effects
-        cells.forEach(cell => {
-            cell.style.boxShadow = "";
+        cells.forEach(c => {
+            c.style.boxShadow = "";
         });
 
         // Switch player
         currentPlayer = currentPlayer === "X" ? "O" : "X";
+        updateFeedback();
+    }
+
+    function botMove() {
+        const emptyCells = cells.filter(cell => !cell.querySelector(".Icon"));
+    
+        // Check if the bot can win
+        for (const cell of emptyCells) {
+            cell.appendChild(createIcon());
+            if (checkWinner()) {
+                return;
+            }
+            cell.removeChild(cell.querySelector(".Icon")); // Undo move
+        }
+    
+        // Check if the bot needs to block the player
+        currentPlayer = "X"; // Temporarily switch to the opponent
+        for (const cell of emptyCells) {
+            cell.appendChild(createIcon());
+            if (checkWinner()) {
+                currentPlayer = "O"; // Switch back to the bot
+                cell.removeChild(cell.querySelector(".Icon")); // Remove the X
+                makeMove(cell); // Block the player
+                return;
+            }
+            cell.removeChild(cell.querySelector(".Icon")); // Undo move
+        }
+        currentPlayer = "O"; // Switch back to the bot
+    
+        // Otherwise, pick a random empty cell
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        makeMove(randomCell);
+    }
+    
+
+    function updateFeedback() {
         if (currentPlayer === "X") {
             SetFeedback("X Turn", "#00ffff");
         } else {
