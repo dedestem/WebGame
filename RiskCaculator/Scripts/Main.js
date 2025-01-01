@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Calculate.addEventListener("click", () => {
         const Attacker = parseInt(document.getElementById("Attacker").value);
         const Defender = parseInt(document.getElementById("Defender").value);
+        const GiveUp = parseInt(document.getElementById("GiveUp").value);
 
         if (isNaN(Attacker) || Attacker < 1) {
             Message.style.color = "red";
@@ -21,11 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
             Message.innerText = "Invalid defender troops!";
             return;
         }
+        if (isNaN(GiveUp) || GiveUp < 1) {
+            Message.style.color = "red";
+            Message.innerText = "Invalid give up value!";
+            return;
+        }
 
         // Hide input and show result container
         Input.style.display = "none";
         ResultContainer.style.display = "flex";
-        Roll(Attacker, Defender);
+        Roll(Attacker, Defender, GiveUp);
     });
 });
 
@@ -33,11 +39,11 @@ function RollDice() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
-function Roll(AttackerT, DefenderT) {
+function Roll(AttackerT, DefenderT, GiveUp) {
     let Attacker = AttackerT;
     let Defender = DefenderT;
 
-    while (Attacker > 1 && Defender > 0) {
+    while (Attacker > 1 && Defender > 0 && Attacker > GiveUp) {
         let attackerDice = [];
         let defenderDice = [];
 
@@ -54,9 +60,6 @@ function Roll(AttackerT, DefenderT) {
         attackerDice.sort((a, b) => b - a);
         defenderDice.sort((a, b) => b - a);
 
-        // Log the current dice rolls and the updated troop count
-        Log(Attacker, Defender, attackerDice, defenderDice);
-
         // Compare the dice rolls
         for (let i = 0; i < Math.min(attackerDice.length, defenderDice.length); i++) {
             if (attackerDice[i] > defenderDice[i]) {
@@ -65,15 +68,21 @@ function Roll(AttackerT, DefenderT) {
                 Attacker--;
             }
         }
+
+        Log(Attacker, Defender, attackerDice, defenderDice);
     }
 
     const EndMSG = document.getElementById("EndMSG");
-    if (Attacker > 1) {
+
+    if (Attacker <= GiveUp) {
+        EndMSG.style.color = "white";
+        EndMSG.innerText = "Attacker gave up!";
+    } else if (Attacker > 1) {
         EndMSG.style.color = "red";
-        EndMSG.innerText = "Attacker wins!"
+        EndMSG.innerText = "Attacker wins!";
     } else {
         EndMSG.style.color = "lightblue";
-        EndMSG.innerText = "Defender wins!"
+        EndMSG.innerText = "Defender wins!";
     }
 }
 
