@@ -1,0 +1,73 @@
+input {
+    all: unset;
+    background-color: rgb(42, 42, 42);
+    border-radius: 20px;
+    border: none;
+    color: white;
+    padding: 2px;
+}
+
+input:active {
+    border: none;
+}
+
+button {
+    all: unset;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color: rgb(42, 42, 42);
+    cursor: pointer;
+}
+
+input:hover, button:hover, .Result:hover {
+    background-color: rgb(52, 52, 52);
+}
+
+#Message {
+    color: gray;
+}
+
+#Result {
+    display: none;
+    margin-top: 20px; margin-bottom: 20px;
+}
+
+.Result {
+    height: 15vh;
+    width: 50vw;
+
+    padding: 20px;
+
+    background-color: rgb(42, 42, 42);
+    border-radius: 20px;
+}
+
+.Result > div {
+    display: flex;
+    justify-content: space-between;
+    height: 7.5vh;
+}
+
+.Result > div > div > img {
+    height: 5vh;
+}
+
+@media screen and (max-width: 900px) {
+    .Result {
+        height: 20vh;
+        width: 80vw;
+    
+        padding: 20px;
+    
+        background-color: rgb(42, 42, 42);
+        border-radius: 20px;
+    }
+    .Result > div {
+        display: flex;
+        justify-content: space-between;
+        height: 12.5vh;
+    }
+}

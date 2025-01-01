@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Risk Caculator</title>
+        <link rel="stylesheet" href="../Global.css">
+        <link rel="stylesheet" href="Styles/Main.css">
+        <script src="Scripts/Main.js"></script>
+    </head>
+
+    <body>
+        <a id="Menu" href="../">☰</a> 
+        <main id="Input">
+            <p>Attacker</p>
+            <input id="Attacker" type="number" step="1" autocorrect="off" spellcheck="false">
+            <br>
+            <p>Defender</p>
+            <input id="Defender" type="number" step="1" autocorrect="off" spellcheck="false">
+            <br>
+            <button id="Calculate">Calculate</button>
+            <br>
+            <p id="Message">Put in the number of troops each team have!</p>
+        </main>
+        <main id="Result">
+            <h1 id="EndMSG">Attacker Wint</h1>
+            <button style="margin-bottom: 20px;" onclick="window.location.reload();">Back</button>
+        </main> 
+    </body>
+</html>
