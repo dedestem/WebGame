@@ -84,6 +84,12 @@ function Roll(AttackerT, DefenderT, GiveUp) {
         EndMSG.style.color = "lightblue";
         EndMSG.innerText = "Defender wins!";
     }
+
+    const AtOver =  AttackerT - Attacker
+    const DefOver = DefenderT - Defender
+
+    document.getElementById("AttackOver").innerText = "-" + AtOver + "(" + Attacker + ")";
+    document.getElementById("DefenderOver").innerText = "-" + DefOver + "(" + Defender + ")";
 }
 
 function Log(Attacker, Defender, attackerDice, defenderDice) {
