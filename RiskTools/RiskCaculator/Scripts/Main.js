@@ -78,12 +78,13 @@ function Roll(AttackerT, DefenderT, GiveUp) {
 
     const EndMSG = document.getElementById("EndMSG");
 
-    if (Attacker <= GiveUp) {
-        EndMSG.style.color = "white";
-        EndMSG.innerText = "Attacker gave up!";
-    } else if (Defender < 1) {
+    if (Defender < 1) {
         EndMSG.style.color = "red";
         EndMSG.innerText = "Attacker wins!";
+
+    } else if (Attacker <= GiveUp) {
+        EndMSG.style.color = "white";
+        EndMSG.innerText = "Attacker gave up!";
     } else {
         EndMSG.style.color = "lightblue";
         EndMSG.innerText = "Defender wins!";
@@ -142,7 +143,7 @@ function createSection(title, color, troopCount, diceRolls) {
 
     diceRolls.forEach(roll => {
         const img = document.createElement('img');
-        img.src = `Images/${roll}.svg`;  // Use the rolled number for the image (1-6)
+        img.src = `../../Assets/Dices/${roll}.svg`;  // Use the rolled number for the image (1-6)
         diceDiv.appendChild(img);
     });
 
