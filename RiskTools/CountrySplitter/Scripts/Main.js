@@ -30,7 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     Divide.addEventListener("click", () => {
-        const Players = parseInt(document.getElementById("Players").value);
+        let Players = parseInt(document.getElementById("Players").value);
+        let GhostEnabled = false;
+        if (Players < 3) {
+            Players = 3; // Ghost Player
+            GhostEnabled = true;
+        }
 
         // Validate player count
         if (isNaN(Players) || Players < 2 || Players > 6) {
@@ -84,6 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Add the player's title
             const playerTitle = document.createElement("h3");
+            if (GhostEnabled == true && playerIndex == 3 ) {
+                playerTitle.innerText = `Ghost player`;
+            } else {
+                playerTitle.innerText = `Player ${playerIndex + 1}`;
+            }
             playerTitle.innerText = `Player ${playerIndex + 1}`;
             playerColumn.appendChild(playerTitle);
 
