@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const Defender = parseInt(document.getElementById("Defender").value);
         const GiveUp = parseInt(document.getElementById("GiveUp").value);
 
-        if (isNaN(Attacker) || Attacker < 1) {
+        if (isNaN(Attacker) || Attacker < 2) {
             Message.style.color = "red";
             Message.innerText = "Invalid attacker troops!";
             return;
@@ -77,7 +77,7 @@ function Roll(AttackerT, DefenderT, GiveUp) {
     if (Attacker <= GiveUp) {
         EndMSG.style.color = "white";
         EndMSG.innerText = "Attacker gave up!";
-    } else if (Attacker > 1) {
+    } else if (Defender < 1) {
         EndMSG.style.color = "red";
         EndMSG.innerText = "Attacker wins!";
     } else {

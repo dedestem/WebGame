@@ -1,0 +1,31 @@
+input {
+    all: unset;
+    background-color: rgb(42, 42, 42);
+    border-radius: 20px;
+    border: none;
+    color: white;
+    padding: 2px;
+}
+
+input:active {
+    border: none;
+}
+
+button {
+    all: unset;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color: rgb(42, 42, 42);
+    cursor: pointer;
+}
+
+input:hover, button:hover, .Result:hover {
+    background-color: rgb(52, 52, 52);
+}
+
+#Message {
+    color: gray;
+}

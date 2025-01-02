@@ -16,6 +16,7 @@ main {
     justify-content: center;
     flex-direction: column;
     gap: 20px;
+    text-align: center;
 }
 
 #Menu {
