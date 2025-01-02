@@ -69,6 +69,10 @@ function Roll(AttackerT, DefenderT, GiveUp) {
             }
         }
 
+        // Ensure troops don't go below 0
+        Attacker = Math.max(Attacker, 0);
+        Defender = Math.max(Defender, 0);
+
         Log(Attacker, Defender, attackerDice, defenderDice);
     }
 
@@ -85,12 +89,13 @@ function Roll(AttackerT, DefenderT, GiveUp) {
         EndMSG.innerText = "Defender wins!";
     }
 
-    const AtOver =  AttackerT - Attacker
-    const DefOver = DefenderT - Defender
+    const AtOver =  AttackerT - Attacker;
+    const DefOver = DefenderT - Defender;
 
-    document.getElementById("AttackOver").innerText = "-" + AtOver + "(" + Attacker + ")";
-    document.getElementById("DefenderOver").innerText = "-" + DefOver + "(" + Defender + ")";
+    document.getElementById("AttackOver").innerText = "-" + AtOver + "   (" + Attacker + ")";
+    document.getElementById("DefenderOver").innerText = "-" + DefOver + "   (" + Defender + ")";
 }
+
 
 function Log(Attacker, Defender, attackerDice, defenderDice) {
     const resultDiv = document.createElement('div');
