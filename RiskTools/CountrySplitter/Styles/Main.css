@@ -7,6 +7,27 @@ input {
     padding: 2px;
 }
 
+input[type="radio"] {
+    background-color: rgb(42, 42, 42);
+    border-radius: 50%;
+    width: 16px;   /* Set the size */
+    height: 16px;  /* Set the size */
+    border: 2px solid white;  /* Ensure there's a border */
+    appearance: none;  /* Remove the default appearance */
+    position: relative;
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgb(255, 0, 255);  /* The inner circle when checked */
+}
+
 input:active {
     border: none;
 }
@@ -22,10 +43,74 @@ button {
     cursor: pointer;
 }
 
-input:hover, button:hover, .Result:hover {
+input:hover, button:hover, .Result:hover, .card:hover {
     background-color: rgb(52, 52, 52);
 }
 
 #Message {
     color: gray;
+}
+
+#Result {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    gap: 20px;
+    min-height: 100vh;
+    height: fit-content;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.player-column {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1 0 30%; /* Adjust the percentage to fit the number of divs per row */
+    max-width: 30%; /* Ensure that no div exceeds this width */
+    box-sizing: sborder-box; 
+}
+
+@media (max-width: 768px) {
+    .player-column{
+        flex: 1 0 45%; /* 2 items per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .player-column{
+        flex: 1 0 100%; /* 1 item per row on very small screens */
+    }
+}
+
+
+.card {
+    background-color: rgb(42, 42, 42);
+    border: 0.5px solid #000000;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 200px;
+    min-height: 50px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-country {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white;
+}
+
+.card-troup {
+    font-size: 1em;
+    color: #b3b2b2;
 }

@@ -43,7 +43,7 @@ a {
     color: #1e34b1;
 }
 
-h1, p, span {
+h1, h2, h3, p, span {
     font-family: sans-serif;
     color: white;
 }
