@@ -32,8 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     Divide.addEventListener("click", () => {
         let Players = parseInt(document.getElementById("Players").value);
         let GhostEnabled = false;
-        if (Players < 3) {
-            Players = 3; // Ghost Player
+
+        // Add Ghost player if there are 2 players (original count was 2)
+        if (Players === 2) {
+            Players = 3; // Add one Ghost player (total 3 players)
             GhostEnabled = true;
         }
 
@@ -89,12 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Add the player's title
             const playerTitle = document.createElement("h3");
-            if (GhostEnabled == true && playerIndex == 3 ) {
-                playerTitle.innerText = `Ghost player`;
+            if (GhostEnabled && playerIndex === 2) {
+                playerTitle.innerText = `Ghost Player`;  // Player 3 (index 2) is the Ghost player
             } else {
                 playerTitle.innerText = `Player ${playerIndex + 1}`;
             }
-            playerTitle.innerText = `Player ${playerIndex + 1}`;
             playerColumn.appendChild(playerTitle);
 
             // Add cards to the player's column
